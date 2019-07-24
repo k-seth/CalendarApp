@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Calendar Viewer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A front end html file to serve as a platform to manage a server of calendars">
+    <meta name="keywords" content="school academic ical">
+    <meta name="author" content="Seth Kuipers">
+    <!-- Load jquery, bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <!-- Custom CSS End -->
+</head>
+<body>
+    <div class="card text-center border-color" id="statusPanel">
+        <div class= "card-header" id="statusHead">
+            <h4>Status Panel</h4>
+        </div>
+        <div class="card-block" id="statusText">
+            No Older Updates
+        </div>
+        <div>
+            <input type="button" value="Clear" class="btn backColour btn-sm" id="statusClear">
+        </div>
+    </div>
+
+    <hr>
+     <div>
+        <input type="button" value="Create Calendar" class="btn backColour" data-toggle="modal" data-target="#createCalModal" id="createCal">
+        <input type="button" value="Add Event" class="btn backColour" data-toggle="modal" data-target="#addEventModal" id="addEvent">
+    </div>
+    <hr>
+
+    <div class="modal fade" id="createCalModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create A New Calendar</h5>
+                </div>
+                <div class="modal-body">
+
+          
+                    <h3>Calendar Information</h3>
+                    <form id="createCalForm">
+                        <div class="form-group">
+                            <label for="fileBox">File Name</label>
+                            <input type="text" class="form-control border-color" id="fileBox" placeholder=".ics File">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="entryBox">Version</label>
+                                <input type="text" class="form-control border-color" id="entryBox" name="VERSION" placeholder="Version">
+                            </div>
+                            <div class="form-group col-md-8">
+                                <label for="entryBox">Product ID</label>
+                                <input type="text" class="form-control border-color" id="entryBox" name="PRODID" placeholder="Product ID">
+                            </div>
+                        </div>
+                    </form>
+
+                    <hr>
+
+                    <h3>Event Information</h3>
+                    <form id="createEventForm">
+                        <div class="form-group">
+                            <label for="entryBox">Event UID</label> <!-- UID -->
+                            <input type="text" class="form-control border-color" id="entryBox" name="UID" placeholder="UID">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="entryBox">Creation Date</label> <!-- DTSTAMP -->
+                                <input type="text" class="form-control border-color" id="entryBox" name="DTSTAMP" placeholder="YYYYMMDDTHHMMSS(Z)">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="entryBox">Start Date</label> <!-- DTSTART -->
+                                <input type="text" class="form-control border-color" id="entryBox" name="DTSTART" placeholder="YYYYMMDDTHHMMSS(Z)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="entryBox">Summary</label> <!-- Summary -->
+                            <input type="text" class="form-control border-color" id="entryBox" name="SUMMARY" placeholder="Summary">
+                            <small class="form-text text-muted">Optional</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="cancelCal" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="saveCal">Save Calendar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addEventModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                   <h5 class="modal-title">Add A New Event</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="addEventForm">
+                        <h3>Event Information</h3>
+                        <div class="form-group">
+                            <label for="inputState">Calendar to Edit</label>
+                            <select id="inputState" class="form-control border-color">
+                                <option selected>Choose...</option>
+                                <!--<option>...</option>-->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="entryBox">Event UID</label> <!-- UID -->
+                            <input type="text" class="form-control border-color" id="entryBox" name="UID" placeholder="UID">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="entryBox">Creation Date</label> <!-- DTSTAMP -->
+                                <input type="text" class="form-control border-color" id="entryBox" name="DTSTAMP" placeholder="YYYYMMDDTHHMMSS(Z)">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="entryBox">Start Date</label> <!-- DTSTART -->
+                                <input type="text" class="form-control border-color" id="entryBox" name="DTSTART" placeholder="YYYYMMDDTHHMMSS(Z)">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="entryBox">Summary</label> <!-- Summary -->
+                            <input type="text" class="form-control border-color" id="entryBox" name="SUMMARY" placeholder="Summary">
+                            <small class="form-text text-muted">Optional</small>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="cancelEvt" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" id="eventAdd">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>File Log</h3>
+
+    <form id="uploadForm">
+        <label class="btn backColour btn-file">Upload File
+            <input name="fileUpload" type="file" style="display: none" id="fileUpload">
+        </label>
+    </form>
+
+    <!-- Not ideal, as this causes the whole table to scroll, but this is the best solution -->
+    <div id="filesTableDiv">
+        <table id="fileLog">
+            <!-- Sets the width of the columns in the table. Much easier to do in table than externally -->
+            <col width="20%">
+            <col width="15%">
+            <col width="15%">
+            <col width="10%">
+            <col width="40%">
+            <thead class="tableHead">
+                <tr>
+                    <th class="th"> File Name </br> (click to download) </th>
+                    <th class="th"> No. Events </th>
+                    <th class="th"> No. Properties </th>
+                    <th class="th"> Version </th>
+                    <th class="th"> Product ID </th>
+                </tr>
+            </thead>
+            <tbody class="tableBody" id="filesBody">
+                <tr class="tr" id="filesBlank">
+                    <td class="td">
+                        <div class="tableDiv">No files on server</div>
+                    </td>
+                    <td class="td">
+                        <div class="tableDiv"></div>
+                    </td>
+                    <td class="td">
+                        <div class="tableDiv"></div>
+                    </td>
+                    <td class="td">
+                        <div class="tableDiv"></div>
+                    </td>
+                    <td class="td">
+                        <div class="tableDiv"></div>
+                    </td>
+                </tr>
+            </tbody>          
+        </table>
+    </div>
+
+    <hr>
+    <h3>Calendar View</h3>
+
+    <div id="saveDrop">
+        <select id="saveDropSel" class="btn backColour">
+            <option selected>Choose...</option>
+        </select>
+    </div>
+
+    <div id="eventTableDiv">
+    <table id="calPanel">
+        <!-- Sets the width of the columns in the table. Much easier to do in table than externally -->
+        <col width="10%">
+        <col width="15%">
+        <col width="15%">
+        <col width="15%">
+        <col width="15%">
+        <col width="30%">
+        <thead class="tableHead">
+            <tr>
+                <th class="th"> Event No. </th>
+                <th class="th"> No. Alarms </th>
+                <th class="th"> No. Properties </th>
+                <th class="th"> Start Date </th>
+                <th class="th"> Start Time </th>
+                <th class="th"> Summary </th>
+            </tr>
+        </thead>
+        <tbody class="tableBody" id="eventsBody">
+            <tr class="tr" id="eventsBlank">
+                <td class="td">
+                    <div class="tableDiv">No Calendar</div>
+                </td>
+                <td class="td">
+                    <div class="tableDiv"></div>
+                </td>
+                <td class="td">
+                    <div class="tableDiv"></div>
+                </td>
+                <td class="td">
+                    <div class="tableDiv"></div>
+                </td>
+                <td class="td">
+                    <div class="tableDiv"></div>
+                </td>
+                <td class="td">
+                    <div class="tableDiv"></div>
+                </td>
+            </tr>
+        </tbody>          
+    </table>
+    </div>
+
+    <!-- Alarm and property tables. Hidden by default -->
+    <hr>
+    <h3>Alarms and Properties</h3>
+
+    <div id="alarmTableDiv">
+    <table id="alarmTable">
+        <!-- Sets the width of the columns in the table. Much easier to do in table than externally -->
+        <col width="10%">
+        <col width="15%">
+        <col width="15%">
+        <col width="60%">
+        <thead class="tableHead">
+            <tr>
+                <th class="th"> Alarm No. </th>
+                <th class="th"> No. Properties </th>
+                <th class="th"> Action </th>
+                <th class="th"> Trigger </th>
+            </tr>
+        </thead>
+        <tbody class="tableBody" id="alarmBody">
+            <tr class="tr" id="alarmsBlank">
+                <td class="td">
+                    <div class="tableDiv">No Alarms</div>
+                </td>
+                <td class="td">
+                    <div class="tableDiv"></div>
+                </td>
+                <td class="td">
+                    <div class="tableDiv"></div>
+                </td>
+                <td class="td">
+                    <div class="tableDiv"></div>
+                </td>
+            </tr>
+        </tbody>          
+    </table>
+    </div>
+
+    <div id="propertyTableDiv">
+    <table id="propertyTable">
+        <!-- Sets the width of the columns in the table. Much easier to do in table than externally -->
+        <col width="15%">
+        <col width="20%">
+        <col width="65%">
+        <thead class="tableHead">
+            <tr>
+                <th class="th"> Property No. </th>
+                <th class="th"> Property Name </th>
+                <th class="th"> Property Description </th>
+            </tr>
+        </thead>
+        <tbody class="tableBody" id="propertyBody">
+            <tr class="tr" id="propertiesBlank">
+                <td class="td">
+                    <div class="tableDiv">No Properties</div>
+                </td>
+                <td class="td">
+                    <div class="tableDiv"></div>
+                </td>
+                <td class="td">
+                    <div class="tableDiv"></div>
+                </td>
+            </tr>
+        </tbody>          
+    </table>
+    </div>
+
+    <hr>
+    <h3>Database Connection</h3>
+
+    <button class="btn backColour" id="serverConnect" type="button" data-toggle="collapse" data-target="#serverCollapse" aria-expanded="false" aria-controls="serverCollapse">
+        Connect to server
+    </button>
+
+    <div class="collapse" id="serverCollapse">
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="entryBox">Database Name</label>
+                <input type="text" class="form-control border-color" value="" id="entryBox" name="DATABASE" placeholder="Database name">
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="entryBox">Username</label>
+                    <input type="text" class="form-control border-color" value="" id="entryBox" name="USER" placeholder="Username">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="entryBox">Password</label>
+                    <input type="text" class="form-control border-color" value="" id="entryBox" name="PASS" placeholder="Password">
+                </div>
+            </div>
+        </form>
+
+        <button type="button" class="btn btn-success" id="connect">Connect</button>
+    </div>
+
+    <br/>
+
+    <div id="tableManagement">
+        <hr>
+        <button class="btn backColour" id="dbShow" type="button">
+            Display Database Status
+        </button>
+        <div id="dbFiles">
+            <button class="btn backColour" id="dbStore" type="button">
+                Store All Files
+            </button>
+            <button class="btn backColour" id="dbClear" type="button">
+                Clear All Data
+            </button>
+
+            <select id="extraQueries" class="btn backColour">
+                <option selected>Choose...</option>
+                <option>Display All Events (By: Date)</option>
+                <option>Display All Events (By Select: File)</option>
+                <option>Display All Events (By: Conflict)</option>
+
+                <option>Display All Events (By Input: Location)</option>
+                <option>Display All Alarms (By Input: Action)</option>
+                <option>Display All Alarms (By Select: File)</option>
+            </select>
+
+            <div id="dbEvtSel">
+                <select id="dbEvtDropSel" class="btn backColour">
+                    <option selected>Choose...</option>
+                </select>
+                <input type="text" class="form-control border-color" id="dbEvtInput" placeholder="Input">
+                <button class="btn btn-success" id="dbSearch" type="button">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leave me at the bottom of body -->
+    <script src="/index.js"></script>
+</body>
+    <!-- This is intentionally left outside the body -->
+    <hr>
+    <div id="pageFoot">
+        Seth Kuipers - April, 2019. </br> University of Guelph - CIS*2750.
+    </div>
+</html>

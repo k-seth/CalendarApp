@@ -1,0 +1,192 @@
+html {
+    width: 80%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0 auto;
+    font-size: 16px;
+    background-color: #b5b5b5;
+}
+body {
+    height: 100%;
+    min-height: 100%;
+    line-height: 1.75;
+    background-color: #b5b5b5;
+}
+a:link:hover {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    text-decoration: underline;
+    cursor: pointer;
+    cursor: hand;
+}
+input[type=submit], button {
+    cursor: pointer;
+    cursor: hand;
+}
+@media(max-width: 900px) {
+    html {
+        font-size: 14px !important;
+        width: 80% !important;
+    }
+}
+@media(max-width: 480px) {
+    html {
+        font-size: 12px !important;
+        width: 90% !important;
+    }
+}
+@media(max-width: 320px) {
+    html {
+        font-size: 12px !important;
+        width: 100% !important;
+    }
+}
+
+/* Below are table related styles */
+.tableHead {
+    text-align: center;
+}
+.tableBody {
+    text-align: center;
+}
+.th {
+    background-color: #7395AE;
+    border: dashed;
+    border-width: 2px;
+    border-color: #565559;
+    padding: 5px;
+}
+.tr {
+    background-color: #FFFFFF;
+    border: dashed;
+    border-width: 2px;
+    border-color: #565559;
+}
+.td {
+    padding: 5px;
+    border: solid;
+    border-width: 2px;
+    border-color: #565559;
+}
+
+#fileLog {
+    border: solid;
+    border-width: 2px;
+    border-color: #565559;
+    width: 100%;
+    table-layout: fixed;
+}
+#filesTableDiv {
+    display: inline-block;
+    max-height: 230px;
+    overflow-y: auto;
+}
+#calPanel {
+    border: solid;
+    border-width: 2px;
+    border-color: #565559;
+    width: 100%;
+    table-layout: fixed;
+}
+#eventTableDiv {
+    display: inline-block;
+    max-height: 362px;
+    overflow-y: auto;
+}
+#alarmTable {
+    border: solid;
+    border-width: 2px;
+    border-color: #565559;
+    width: 100%;
+    table-layout: fixed;
+}
+#alarmTableDiv {
+    display: inline-block;
+    max-height: 362px;
+    overflow-y: auto;
+}
+#propertyTable {
+    border: solid;
+    border-width: 2px;
+    border-color: #565559;
+    width: 100%;
+    table-layout: fixed;
+}
+#propertyTableDiv {
+    display: inline-block;
+    max-height: 362px;
+    overflow-y: auto;
+}
+.tableDiv {
+    white-space: nowrap;
+    overflow-x: auto;
+    width: 99%;    
+}
+
+/* Card Related stuff */
+.card-header {
+    background-color: #7395AE;
+}
+.border-color {
+    border-color: #7395AE;
+}
+.card-block {
+    white-space: nowrap;
+    max-height: 125px;
+    overflow: auto;
+}
+
+
+/* Modal related */
+.modal-header {
+    background-color: #7395AE;
+}
+.modal-body {
+    background-color: #b5b5b5;
+}
+.modal-footer {
+    background-color: #7395AE;
+}
+
+/* misc */
+.backColour {
+    background-color: #7395AE; 
+}
+.backColour:hover {
+    background-color: #557A95;
+}
+
+#createCal {
+    width: 49%;
+}
+#addEvent {
+    float: right;
+    width: 49%;
+}
+
+#pageFoot {
+    text-align: center;
+    font-size: 10px;    
+}
+#saveDrop {
+    padding-bottom: 10px;
+}
+
+#tableManagement {
+    display: none;
+}
+#dbFiles {
+    display: none;
+}
+
+#dbEvtDropSel {
+    display: none;
+}
+
+#dbSearch {
+    display: none;
+}
+#dbEvtInput {
+    display: none;
+}
